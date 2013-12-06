@@ -136,7 +136,7 @@ public class Trassirovka {
                             a = 3;
                             b = 4;
                             break;
-                        case 5:
+                        case 5:      //
                             retval = list.contains(j + 1);
                             if (retval == true)
                                 break;
