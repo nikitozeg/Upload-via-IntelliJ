@@ -116,6 +116,7 @@ public class Trassirovka {
                             result[a][b + 1] = j + 1;
                             list.add(j + 1);
                             position = 3;
+
                             break;
                         case 3:
                             retval = list.contains(j + 1);
