@@ -6,8 +6,9 @@ import java.util.Arrays;
 import java.io.InputStreamReader;
 
 class AsSort {
+    int[] key = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
 
-    void meth(int array[], int key[]) {
+    AsSort(int array[]) {
 
         for (int t = 1; t < array.length; t++) {
             for (int k = 0; k < array.length - t; k++) {
@@ -25,7 +26,6 @@ class AsSort {
         }
     }
 }
-
 
 public class Trassirovka {
     public static void main(String[] args) throws IOException {
@@ -75,9 +75,8 @@ public class Trassirovka {
         System.out.println("Total number of relations(TNR), for each top\n" + Arrays.toString(ksem));    //Displaying the array of related elements.
         System.out.println();
 
-        AsSort obj = new AsSort();
-        int[] key = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
-        obj.meth(ksem, key);
+        AsSort obj = new AsSort(ksem);                           //Here is an associative sorting with key. Method returns key-sorted set
+        int key[] = obj.key;
 
         System.out.println("Iteration priority\n" + Arrays.toString(key) + "\n");
 
