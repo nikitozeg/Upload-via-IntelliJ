@@ -7,32 +7,52 @@ import java.io.InputStreamReader;
 
 class AsSort {
     int[] key = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int[] sum = new int[9];
+    static int i, k, a, b;
 
     AsSort(int array[]) {
 
-        for (int t = 1; t < array.length; t++) {
-            for (int k = 0; k < array.length - t; k++) {
+        for (i = 1; i < array.length; i++) {
+            for (k = 0; k < array.length - i; k++) {
                 if (array[k] < array[k + 1]) {
 
-                    int a = array[k];
+                    a = array[k];
                     array[k] = array[k + 1];
                     array[k + 1] = a;
 
-                    int b = key[k];
+                    b = key[k];
                     key[k] = key[k + 1];
                     key[k + 1] = b;
                 }
             }
         }
     }
+
+    void ResultOut(int array[][], int n) {
+        for (i = 0; i < n; i++) {
+            for (k = 0; k < n; k++)
+                System.out.print(array[i][k] + " ");
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+
+    AsSort(int array[][]) {
+        for (i = 0; i < array.length; i++) {
+            sum[i] = 0;
+            for (k = 0; k < array.length; k++)
+                if (array[k][i] != 0)
+                    sum[i] += 1;
+        }
+    }
 }
 
 public class Trassirovka {
     public static void main(String[] args) throws IOException {
-        int i, j, ves, m = 8, n = 9, с, a, b, position;
+        int i, j, ves, n = 9, с, a, b, position;
         int[][] nums = new int[n][n];
-        int[][] result = new int[m][m];
-        int[] kse = new int[9];
+        int[][] result = new int[n][n];
         int[] ksem = new int[9];
 
         boolean retval;
@@ -45,7 +65,6 @@ public class Trassirovka {
         //  name= JOptionPane.showInputDialog("enter");
         //  System.out.println(br.readLine());
         // for(int k=0;kk<5;k++){ nums[k][k]=0; }
-
 
         for (с = 0; с < 9; с++) {         //Defining the   Total number of relations   (TNR)
             s = br.readLine();
@@ -63,31 +82,18 @@ public class Trassirovka {
             nums[i][j] = ves;
         }
 
-        for (i = 0; i < n; i++) {          // Calculating the summ of TNR
-            kse[i] = 0;
-            for (j = 0; j < n; j++) {
-                if (nums[j][i] != 0) {
-                    kse[i] += 1;
-                }
-            }
-            ksem[i] = kse[i];
-        }
-        System.out.println("Total number of relations(TNR), for each top\n" + Arrays.toString(ksem));    //Displaying the array of related elements.
-        System.out.println();
+        AsSort obj1 = new AsSort(nums);
+        ksem = obj1.sum;                 //  Transfer result of object to ksem variable (for illustration).
 
-        AsSort obj = new AsSort(ksem);                           //Here is an associative sorting with key. Method returns key-sorted set
-        int key[] = obj.key;
+        AsSort obj = new AsSort(ksem);   //Creating new object for overload Java constructor
+        System.out.println("Total number of relations(TNR), for each top\n" + Arrays.toString(ksem) + "\n");    //Displaying the array of related elements.
 
-        System.out.println("Iteration priority\n" + Arrays.toString(key) + "\n");
+        int key[] = obj.key;             //Here is the sorting with associative keys. Method returns key-sorted set.
 
         System.out.println("Default matrix");
-        for (i = 0; i < n; i++) {
-            for (j = 0; j < n; j++) {
-                System.out.print(nums[i][j] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
+        obj.ResultOut(nums, n);          //Result output
+
+        System.out.println("Iteration priority\n" + Arrays.toString(key) + "\n");
 
         a = 4;
         b = 4;
@@ -148,19 +154,12 @@ public class Trassirovka {
                 }
         }
 
-
         System.out.println("Result matrix");
-
         a = 4;               // Definition of center element
         b = 4;
 
         result[a][b] = key[0];
-        for (i = 0; i < m; i++) {
-            for (j = 0; j < m; j++) {
-                System.out.print(result[i][j] + " ");
-            }
-            System.out.println();
-        }
+        obj.ResultOut(result, n);
 
         fin.close();
     }
