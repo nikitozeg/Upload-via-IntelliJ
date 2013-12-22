@@ -1,16 +1,64 @@
+import javax.swing.*;
+import java.util.Arrays;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.io.InputStreamReader;
 
-class AsSort {
+class putInEmptyCell {
+    static public boolean flag = true;
+    static public int aa, bb;
+
+    int[][] putInEmptyCell(int array[][], int a, int b, int value) {
+
+        if (array[a - 1][b] == 0) {
+            array[a - 1][b] = value;
+            aa = a - 1;
+            bb = b;
+        } else if (array[a - 1][b + 1] == 0) {
+            array[a - 1][b + 1] = value;
+            aa = a - 1;
+            bb = b + 1;
+        } else if (array[a][b + 1] == 0) {
+            array[a][b + 1] = value;
+            aa = a;
+            bb = b + 1;
+        } else if (array[a + 1][b + 1] == 0) {
+            array[a + 1][b + 1] = value;
+            aa = a + 1;
+            bb = b + 1;
+        } else if (array[a + 1][b] == 0) {
+            array[a + 1][b] = value;
+            aa = a + 1;
+            bb = b;
+        } else if (array[a + 1][b - 1] == 0) {
+            array[a + 1][b - 1] = value;
+            aa = a + 1;
+            bb = b - 1;
+        } else if (array[a][b - 1] == 0) {
+            array[a][b - 1] = value;
+            aa = a;
+            bb = b - 1;
+        } else if (array[a - 1][b - 1] == 0) {
+            array[a - 1][b - 1] = value;
+            aa = a - 1;
+            bb = b - 1;
+        } else flag = false;
+
+        return array;
+    }
+}
+
+
+class getSetofKey  {
+
     int[] key = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9};
     int[] sum = new int[9];
     static int i, k, a, b;
 
-    AsSort(int array[]) {
+
+    getSetofKey(int array[]) {
 
         for (i = 1; i < array.length; i++) {
             for (k = 0; k < array.length - i; k++) {
@@ -37,8 +85,7 @@ class AsSort {
         System.out.println();
     }
 
-
-    AsSort(int array[][]) {
+    getSetofKey(int array[][]) {
         for (i = 0; i < array.length; i++) {
             sum[i] = 0;
             for (k = 0; k < array.length; k++)
@@ -50,25 +97,34 @@ class AsSort {
 
 public class Trassirovka {
     public static void main(String[] args) throws IOException {
-        int i, j, ves, n = 9, с, a, b, position;
-        int[][] nums = new int[n][n];
+        int i;
+        int j;                                                                   //
+        int ves;                              //
+        int n = 9;
+        int с;
+        int a;
+        int b;                                     //
+        int[][] defMatrix = new int[n][n];
         int[][] result = new int[n][n];
-        int[] ksem = new int[9];
-
-        boolean retval;
+        int[] numberOfConnections;
+        boolean retval;                                   //sdfsdf
         ArrayList<Integer> list = new ArrayList<Integer>();
         String s;
+        int ii, jj;                                         ///
+        //int[] priority=new int[]{};
 
-        //try{
-        FileInputStream fin = new FileInputStream("C:/Intel/1.txt");
+
+
+        FileInputStream fin = new FileInputStream("C:/Intel/1.txt");    //читать файл
         BufferedReader br = new BufferedReader(new InputStreamReader(fin));
-        //  name= JOptionPane.showInputDialog("enter");
-        //  System.out.println(br.readLine());
-        // for(int k=0;kk<5;k++){ nums[k][k]=0; }
+        //   String name= JOptionPane.showInputDialog("enter");
+       //  System.out.println(br.readLine());
 
-        for (с = 0; с < 9; с++) {         //Defining the   Total number of relations   (TNR)
-            s = br.readLine();
-            i = Integer.parseInt(s);
+
+
+        for (с = 0; с < 6; с++) {
+            s = br.readLine();            //Определение общего числа    связей
+            i = Integer.parseInt(s);     //string----->   integer
             i = i - 1;
 
             s = br.readLine();
@@ -78,89 +134,131 @@ public class Trassirovka {
             s = br.readLine();
             ves = Integer.parseInt(s);
 
-            nums[j][i] = ves;             // "Mirroring" the right-hand part of matrix on the left part
-            nums[i][j] = ves;
+            defMatrix[j][i] = ves;             // "Mirroring" the right-hand part of matrix on the left part
+            defMatrix[i][j] = ves;             //Зеркальное отображение правой половины на левую.
         }
 
-        AsSort obj1 = new AsSort(nums);
-        ksem = obj1.sum;                 //  Transfer result of object to ksem variable (for illustration).
 
-        AsSort obj = new AsSort(ksem);   //Creating new object for overload Java constructor
-        System.out.println("Total number of relations(TNR), for each top\n" + Arrays.toString(ksem) + "\n");    //Displaying the array of related elements.
+        getSetofKey obj1 = new  getSetofKey(defMatrix);
+        numberOfConnections = obj1.sum;                 //  Transfer result of object to numberOfConnections variable (for illustration).
+        //Передача результата
+        getSetofKey obj = new  getSetofKey(numberOfConnections);
 
+        //Creating new object for overload Java constructor
+        System.out.println("Total number of relations(TNR), for each top\n" + Arrays.toString(numberOfConnections) + "\n");    //Displaying the array of related elements.
         int key[] = obj.key;             //Here is the sorting with associative keys. Method returns key-sorted set.
 
         System.out.println("Default matrix");
-        obj.ResultOut(nums, n);          //Result output
+        obj.ResultOut(defMatrix, n);          //Result output
 
-        System.out.println("Iteration priority\n" + Arrays.toString(key) + "\n");
+        System.out.println("Iteration priority- key\n" + Arrays.toString(key) + "\n");
+        int a1, b1;
 
         a = 4;
         b = 4;
-        position = 1;
-        list.add(key[0]);
 
-        for (i = 0; i <= 2; i++) {
-            for (j = 0; j < 9; j++)
-                if (nums[i][j] == 0)
-                    ;
-                else {
-                    switch (position) {
-                        case 1:
-                            retval = list.contains(j + 1);
-                            if (retval == true)
-                                break;
-                            result[a - 1][b] = j + 1;
-                            list.add(j + 1);
-                            position = 2;
-                            break;
-                        case 2:
-                            retval = list.contains(j + 1);
-                            if (retval == true)
-                                break;
-                            result[a][b + 1] = j + 1;
-                            list.add(j + 1);
-                            position = 3;
+        putInEmptyCell objPutInEmptyCell = new putInEmptyCell();
 
-                            break;
-                        case 3:
-                            retval = list.contains(j + 1);
-                            if (retval == true)
-                                break;
-                            result[a + 1][b] = j + 1;
-                            list.add(j + 1);
-                            position = 4;
-                            break;
-                        case 4:
-                            retval = list.contains(j + 1);
-                            if (retval == true)
-                                break;
-                            result[a][b - 1] = j + 1;
-                            list.add(j + 1);
-                            position = 5;
-                            a = 3;
-                            b = 4;
-                            break;
-                        case 5:      //
-                            retval = list.contains(j + 1);
-                            if (retval == true)
-                                break;
-                            result[a - 1][b] = j + 1;
-                            list.add(j + 1);
-                            position = 1;
-                            a = 2;
-                            break;
-                    }
-                }
+       // for (int ty = 0; ty < 9; ty++) {              //Это закоментированный код для установки границ.
+        //    result[3][5] = 6;
+       //     result[3][6]=4;
+       //     list.add(4);
+      //  list.add(6);
+       // }
+
+ /*     for (int ty = 0; ty < 9; ty++) {
+            result[ty][5] = 11;
+            list.add(11);
+        }                    */
+
+
+        if (result[a][b]  !=0) {                         //Если установлена граница, то проверяется, не стоит ли первый элемент на ней.
+            result = objPutInEmptyCell.putInEmptyCell(result, a, b, key[0]);
+            a = objPutInEmptyCell.aa;
+            b = objPutInEmptyCell.bb;
+            result[a][b] = key[0];
+            list.add(key[0]);
+        } else {                                        //..если нет, то ставим по координатам [a] и [b]
+            result[a][b] = key[0];
+            list.add(key[0]);                           //и добавляем в список добавленных элементов.
         }
 
-        System.out.println("Result matrix");
-        a = 4;               // Definition of center element
-        b = 4;
+        a1 = a;
+        b1 = a;
 
-        result[a][b] = key[0];
+        getSetofKey objnik = new getSetofKey(defMatrix[1]);
+        int[] priority= objnik.key;
+
+        //   System.out.println("niks priority [1] " + Arrays.toString(priority) + "\n");
+        int oldres = 99999;
+
+        for (i = 0; i < 6; i++) {
+
+            a = a1;
+            b = b1;
+            if (i != 0) {
+
+                getSetofKey objnikw = new getSetofKey(defMatrix[key[i] - 1]);
+                priority = objnikw.key;
+                //   System.out.println("key[i]= " + (key[i]) + " i=" + i + "\n");
+                //    System.out.println("if!=0 niks priority [" + i + "]=" + "\n" + Arrays.toString(priority) + "\n");
+
+                oldres = result[a][b];
+
+                {
+                    for (ii = 0; ii < 9; ii++) {
+                        for (jj = 0; jj < 9; jj++) {
+                            if (result[ii][jj] == key[i]) {
+                                {
+                                    a1 = ii;
+                                    b1 = jj;
+                                    // System.out.println("NAIDENO SOVPADENIE ");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            if (oldres == result[a1][b1]) {
+
+                result = objPutInEmptyCell.putInEmptyCell(result, a, b, key[i]);
+
+                a = objPutInEmptyCell.aa;
+                b = objPutInEmptyCell.bb;
+                //  obj.ResultOut(result, n);
+                list.add(key[i]);
+
+
+                System.out.println("Center= " + result[a][b]);
+
+            } else {
+
+                a = a1;
+                b = b1;
+                System.out.println("Center= " + result[a][b]);
+
+            }
+
+            for (j = 0; j < numberOfConnections[i]; j++) {
+
+                //   System.out.println("numberOfConnections[" + i + "]" + numberOfConnections[i]);
+                retval = list.contains(priority[j]);
+                if (retval == true)
+                    ;
+                else {
+                    result = objPutInEmptyCell.putInEmptyCell(result, a, b, priority[j]);
+                    if (putInEmptyCell.flag == true)
+                        list.add(priority[j]);
+                    else System.out.println("NE DOBAVLEN " + priority[j]);
+                    //  obj.ResultOut(result, n);
+                }
+            }
+        }
+
+
+        System.out.println("Result matrix");          // Printing result matrix. Done!
         obj.ResultOut(result, n);
-
-        fin.close();
     }
 }
